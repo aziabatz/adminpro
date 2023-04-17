@@ -9,7 +9,9 @@ import { HeaderComponent } from 'app/shared/header/header.component';
 import { SidebarComponent } from 'app/shared/sidebar/sidebar.component';
 import { BreadcrumbsComponent } from 'app/shared/breadcrumbs/breadcrumbs.component';
 import { AppRoutingModule } from 'app/app-routing.module';
-
+import { FormsModule } from '@angular/forms';
+import { ComponentsModule } from 'app/components/components.module';
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -22,7 +24,10 @@ import { AppRoutingModule } from 'app/app-routing.module';
   imports: [
     CommonModule,
     SharedModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ComponentsModule,
+    NgChartsModule
   ],
   exports: [
     DashboardComponent,
