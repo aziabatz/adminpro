@@ -12,6 +12,7 @@ import { AppRoutingModule } from 'app/app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { ComponentsModule } from 'app/components/components.module';
 import { NgChartsModule } from 'ng2-charts';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { NgChartsModule } from 'ng2-charts';
     DashboardComponent,
     ProgressComponent,
     Grafica1Component,
-    PagesComponent
+    PagesComponent,
+    AccountSettingsComponent
   ],
   imports: [
     CommonModule,

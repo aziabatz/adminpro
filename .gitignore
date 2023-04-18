@@ -41,8 +41,3 @@ testem.log
 .DS_Store
 Thumbs.db
 
-src/assets/css
-src/assets/images
-src/assets/js
-src/assets/plugins
-src/assets/scss

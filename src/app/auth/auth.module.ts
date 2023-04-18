@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AppRoutingModule } from 'app/app-routing.module';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -14,7 +16,9 @@ import { AppRoutingModule } from 'app/app-routing.module';
   imports: [
     CommonModule,
     // SharedModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule,
+    FormsModule
   ],
   exports: [
     LoginComponent,
