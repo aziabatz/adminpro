@@ -44,14 +44,18 @@ export class UsuarioService {
     localStorage.removeItem('token');
 
     
-    this.auth2.signOut().then(() => {
+    // this.auth2.signOut().then(() => {
 
-      console.log("Signout ")
-      this.ngZone.run(() => {
+    //   console.log("Signout ")
+    //   this.ngZone.run(() => {
         
-        this.router.navigateByUrl('/login');
-      });
+    //     this.router.navigateByUrl('/login');
+    //   });
       
+    // });
+
+    google.accounts.id.revoke('aziabatz@alumnos.unex.es', () => {
+      this.router.navigateByUrl('/login');
     });
   }
 
