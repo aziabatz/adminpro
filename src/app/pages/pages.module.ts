@@ -9,12 +9,13 @@ import { HeaderComponent } from 'app/shared/header/header.component';
 import { SidebarComponent } from 'app/shared/sidebar/sidebar.component';
 import { BreadcrumbsComponent } from 'app/shared/breadcrumbs/breadcrumbs.component';
 import { AppRoutingModule } from 'app/app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from 'app/components/components.module';
 import { NgChartsModule } from 'ng2-charts';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { RxjsComponent } from './rxjs/rxjs.component';
     PagesComponent,
     AccountSettingsComponent,
     PromesasComponent,
-    RxjsComponent
+    RxjsComponent,
+    PerfilComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { RxjsComponent } from './rxjs/rxjs.component';
     AppRoutingModule,
     FormsModule,
     ComponentsModule,
-    NgChartsModule
+    NgChartsModule,
+    ReactiveFormsModule
   ],
   exports: [
     DashboardComponent,
