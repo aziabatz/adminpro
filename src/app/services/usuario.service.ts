@@ -3,6 +3,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginForm } from 'app/interfaces/login-form.interface';
 import { RegisterForm } from 'app/interfaces/usuario.interface';
+import { UsuariosResponseInterface } from 'app/interfaces/usuarios-response.interface';
 import { Usuario } from 'app/models/usuario.model';
 import { environment } from 'environments/environment';
 import { Observable, of } from 'rxjs';
@@ -17,13 +18,13 @@ declare const gapi: any;
   providedIn: 'root'
 })
 export class UsuarioService {
+  
+  public auth2: any;
+  public user?: Usuario;
 
   constructor(private http: HttpClient, private router: Router, private ngZone: NgZone) {
     this.googleInit();
-   }
-
-  public auth2: any;
-  public user?: Usuario;
+  }
 
   async googleInit(){
 
@@ -46,9 +47,16 @@ export class UsuarioService {
   }
 
   get uid(): string{
-    return this.user?.uid || '';
+    return this.user?.id || '';
   }
 
+  get headers(){
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    };
+  }
   
   logout(){
     localStorage.removeItem('token');
@@ -68,7 +76,6 @@ export class UsuarioService {
       this.router.navigateByUrl('/login');
     });
   }
-
 
   validarToken(): Observable<boolean> {
     
@@ -118,21 +125,9 @@ export class UsuarioService {
 
   }
 
-  actualizarPerfil(data: {
-    email: string,
-    name: string,
-    role: string
-  }) {
+  actualizarPerfil(data: Usuario) {
 
-    data = {
-      ...data,
-      role: this.user?.role || 'user'
-    }
-
-    return this.http.put(baseUrl + '/users/' + this.uid, data,
-    {
-      headers: {'x-token': this.token}
-    });
+    return this.http.put(baseUrl + '/users/' + data.id, data, this.headers);
   }
 
   login(formData: LoginForm){
@@ -155,4 +150,35 @@ export class UsuarioService {
       )
   }
 
+  cargarUsuarios(desde: number = 0, limite = 5){
+    const url = `${baseUrl}/users?from=${desde}&to=${limite}`;
+    return this.http.get<UsuariosResponseInterface>(url, this.headers)
+      .pipe(
+        map(resp => {
+          console.log(resp);
+
+          const usuarios: Usuario[] = resp.users.map<Usuario>(
+            user => {
+            return new Usuario(user.name,
+              user.email,
+              '',
+              user.img,
+              user.google,
+              user.role,
+              user.id);
+          });
+          
+          return{
+            total: resp.total,
+            usuarios
+          }
+        })
+      );
+  }
+
+  eliminarUsuario(usuario: Usuario){
+    const uid = usuario.id;
+    const url = `${baseUrl}/users/${uid}`;
+    return this.http.delete(url, this.headers);
+  }
 }

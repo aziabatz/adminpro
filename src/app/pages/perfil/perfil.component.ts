@@ -27,21 +27,21 @@ export class PerfilComponent implements OnInit{
   ngOnInit(){
 
     this.perfilForm = this.fb.group({
-      nombre: [this.user?.nombre, Validators.required],
+      nombre: [this.user?.name, Validators.required],
       email: [this.user?.email, [Validators.required, Validators.email]]
     });
   }
 
   actualizarPerfil() {
-    this.userService.actualizarPerfil({
-      name: this.perfilForm.controls['nombre'].value,
-      email: this.perfilForm.controls['email'].value,
-      role: 'user'
-    })
-      .subscribe(() => {
+    this.userService.actualizarPerfil(
+      
+      new Usuario(this.perfilForm.controls['nombre'].value,
+                  this.perfilForm.controls['email'].value, '',
+                  this.user?.img, this.user?.google, 'USER_ROLE', this.user?.id)
+    ).subscribe(() => {
         const {nombre, email} = this.perfilForm.value;
         if(this.user){
-          this.user!.nombre = nombre;
+          this.user!.name = nombre;
           this.user!.email = email;
 
           Swal.fire('Guardado', 'Cambios guardados con éxito', 'success');
@@ -78,7 +78,7 @@ export class PerfilComponent implements OnInit{
 
   subirImagen(){
     if(this.uploadImage){
-      this.fileUploadService.actualizarFoto(this.uploadImage, 'users', this.user?.uid || '')
+      this.fileUploadService.actualizarFoto(this.uploadImage, 'users', this.user?.id || '')
         .then(img => {
           this.user!.img = img;
           Swal.fire('Guardado', 'Imagen de usuario actuailzada', 'success');
